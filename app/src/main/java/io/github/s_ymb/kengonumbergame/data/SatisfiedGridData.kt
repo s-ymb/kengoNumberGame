@@ -1,7 +1,7 @@
 package io.github.s_ymb.kengonumbergame.data
 
 class SatisfiedGridData(satisfied: SatisfiedGrid = SatisfiedGrid()) : NumbergameData(){
-    public val satisfiedGrid = satisfied
+    val satisfiedGrid = satisfied
     /*
     正解データを正解リストからランダムに選択し、セルの位置の再配置を指定する
 */

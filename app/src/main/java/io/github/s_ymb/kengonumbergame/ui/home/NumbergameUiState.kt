@@ -3,7 +3,6 @@ package io.github.s_ymb.kengonumbergame.ui.home
 import io.github.s_ymb.kengonumbergame.data.NumbergameData
 import io.github.s_ymb.kengonumbergame.data.ScreenBtnData
 import io.github.s_ymb.kengonumbergame.data.ScreenCellData
-import io.github.s_ymb.kengonumbergame.data.DupErr
 
 data class NumbergameUiState(
     val currentData: Array<Array<ScreenCellData>> = Array(NumbergameData.NUM_OF_ROW)
@@ -16,15 +15,14 @@ data class NumbergameUiState(
     val currentDataOrgName: String = "",            // データの元（シャッフル前の名前）
     val currentDataOrgCreateDt: String = "",        // データの元（シャッフル前の作成日）
     val haveSearchResult: Boolean = false,
-    val currentSearchResult: Array<Int> = Array(NumbergameData.KIND_OF_DATA + 1) { 0 },
+    val currentSearchResult: Array<Int> = Array(NumbergameData.KIND_OF_DATA + 1) { NumbergameData.IMPOSSIBLE_NUM },
     val isGameOver: Boolean = false,
-    val sameSatisfiedCnt: Int = -1,                 // 登録済みの正解件数（-1：未検索）
-//    val errBtnMsgID:DupErr = DupErr.NO_DUP,
-//    val errBtnNum: Int = 0,
-//    val level: Int = 0,
+    val animNo: Int = NumbergameData.IMPOSSIBLE_NUM,                // 終了にメーションの種類(IMPOSSIBLE_NUMなし)
+                                                                    // 0: HANABI_explode
+                                                                    // 1: HANABI_half_explode
+                                                                    // 2: HANABI_not_explode
+    val endDialogMsg: String = "",                                  // アニメ終了時のダイアログメッセージ
     val blankCellCnt: Int = 0,
-//    val sliderPosMax: Int = 0,
-//    val sliderPosMin: Int = 0,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

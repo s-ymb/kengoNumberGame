@@ -169,6 +169,168 @@ class EndAnimationDataInit {
                         )
                     ),
             EndAnimationData(
+                name = "HANABI_half_explode",
+                init = 0,
+                duration = 2000L,
+                data =
+                arrayOf(
+                    arrayOf(                 // ０フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                 // １フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0, 0xffFFFFFF,0,0,0,0)
+                    ),
+                    arrayOf(                 // ２フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0, 0xff800000,0,0,0,0)
+                    ),
+                    arrayOf(                 // ３フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0)
+                    ),
+                    arrayOf(                 // ４フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                 // ５フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                 // ６フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xff800000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                // ７フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0xffFF8000,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                // ８フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0xffEEEE00,0,0,0,0xffEEEE00,0,0),
+                        longArrayOf(0,0,0,0xffAAAA00,0,0xffAAAA00,0,0,0),
+                        longArrayOf(0,0,0,0,0xff808000,0,0,0,0),
+                        longArrayOf(0,0,0,0xffAAAA00,0,0xffAAAA00,0,0,0),
+                        longArrayOf(0,0,0xffEEEE00,0,0,0,0xffEEEE00,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    ),
+                    arrayOf(                // ９フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0xff808000,0,0,0,0xff808000,0,0),
+                        longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
+                        longArrayOf(0,0,0xff808000,0,0,0,0xff808000,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                    ),
+                    arrayOf(                // １０フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0xff404000,0,0,0,0xff404000,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0xff404000,0,0,0,0xff404000,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                    ),
+                    arrayOf(                // １１フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                    ),
+                    arrayOf(                // １２フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                    ),
+                    arrayOf(                // １３フレーム目
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0),
+                        longArrayOf(0,0,0,0,0,0,0,0,0)
+                    )
+                )
+            ),
+            EndAnimationData(
                     name = "HANABI_not_explode",
                     init = 0,
                     duration = 2000L,
@@ -290,7 +452,7 @@ class EndAnimationDataInit {
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
-                                longArrayOf(0,0,0,0,0,0,0,0,0),
+                                longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0)
@@ -302,7 +464,7 @@ class EndAnimationDataInit {
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
-                                longArrayOf(0,0,0,0,0,0,0,0,0),
+                                longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0)
                             ),
@@ -314,7 +476,7 @@ class EndAnimationDataInit {
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
-                                longArrayOf(0,0,0,0,0,0,0,0,0),
+                                longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0)
                             ),
                             arrayOf(                // １３フレーム目
@@ -326,7 +488,7 @@ class EndAnimationDataInit {
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
                                 longArrayOf(0,0,0,0,0,0,0,0,0),
-                                longArrayOf(0,0,0,0,0,0,0,0,0)
+                                longArrayOf(0,0,0,0xff404000,0,0xff404000,0,0,0),
                             ),
                         )
             )

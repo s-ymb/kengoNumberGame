@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
-import io.github.s_ymb.kengonumbergame.R
 import io.github.s_ymb.kengonumbergame.ui.navigation.KengoNumberGameNavHost
 
 /**

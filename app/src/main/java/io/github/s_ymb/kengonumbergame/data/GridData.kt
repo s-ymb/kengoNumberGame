@@ -1,6 +1,5 @@
 package io.github.s_ymb.kengonumbergame.data
 
-import io.github.s_ymb.kengonumbergame.data.DupErr
 import kotlin.random.Random
 
 /*

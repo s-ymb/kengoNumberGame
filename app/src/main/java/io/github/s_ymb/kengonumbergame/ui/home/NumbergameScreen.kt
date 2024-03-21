@@ -263,23 +263,13 @@ fun NumberGridLayout(
 fun GameOverNumberGridLayout(
     onNewGameBtnClicked: () -> Unit,
     uiState: NumbergameUiState,
-//    currentData: Array<Array<ScreenCellData>>,
-//    isNewSatisfied: Boolean,
     modifier: Modifier = Modifier
 ) {
     val stage = remember{ mutableIntStateOf(0) }
     val animStart = remember{ mutableStateOf(false) }
 
-    // アニメーションの種類の選択方法も
-    val animationNo =
-        if(1 == uiState.sameSatisfiedCnt){
-            1               //不発のアニメーション（すでに登録済みの正解パターンだったので不発の演出）
-        }else{
-            // 空欄が０件の場合、ゲーム終了なので未登録の正解データの場合はデータベースに追加する
-            // TODO 定数の扱い　dataCnt の関連事項
-
-            0               //爆発のアニメーション sameSatisfiedCnt = -1 件数を検索中の場合もとりあえず０で流す。1でも同じ結果だが…
-        }
+    // アニメーションの種類の選択方法
+    val animationNo = uiState.animNo        //IMPOSSIBLE_NUMの場合、不具合なのでexception になる
 
     val initValue = EndAnimationDataInit.animationData[animationNo].init
     val targetValue = EndAnimationDataInit.animationData[animationNo].data.size - 1
@@ -295,13 +285,14 @@ fun GameOverNumberGridLayout(
     // 空欄が０件の場合、ゲーム終了なので未登録の正解データの場合はデータベースに追加する
     // TODO 定数の扱い　dataCnt の関連事項
     //正解の件数判定が終了していてアニメーションがスタートしていない場合開始する
-    if(!animStart.value && uiState.sameSatisfiedCnt != -1) {
+    if(!animStart.value) {
         animator.start()
         animStart.value = true
     }
     //アニメーションの最後の状態になったらダイアログを表示
     if(stage.intValue == targetValue){
         FinalDialog(
+            dialogMsg = uiState.endDialogMsg,
             onNewGameBtnClicked,
         )
     }
@@ -693,6 +684,7 @@ fun EndBtnLayout(
  */
 @Composable
 private fun FinalDialog(
+    dialogMsg:String = "",
     onNewGameBtnClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -704,7 +696,7 @@ private fun FinalDialog(
             // button. If you want to disable that functionality, simply use an empty
             // onCloseRequest.
         },
-        title = { Text(text = stringResource(R.string.congratulations)) },
+        title = { Text(text = stringResource(R.string.congratulations) + "\n" + dialogMsg) },
         dismissButton = {
             TextButton(
                 onClick = {

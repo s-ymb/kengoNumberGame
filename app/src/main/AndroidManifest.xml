@@ -16,7 +16,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="KengoNumbergame"
+            android:label="Numbergame"
             android:theme="@style/SplashTheme">
             <!--            android:theme="@style/Theme.Numbergame">
             -->

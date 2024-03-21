@@ -1,6 +1,6 @@
 package io.github.s_ymb.kengonumbergame.data
 
-import io.github.s_ymb.kengonumbergame.data.dupErr.NO_DUP
+import io.github.s_ymb.kengonumbergame.data.DupErr
 import kotlin.random.Random
 
 /*
@@ -16,9 +16,9 @@ class GridData(
         同じ数字が範囲内に重複する場合、範囲に応じたエラーを返す。
         （初期値の上書き判定は行わない → view で制限をかける）
      */
-    fun setData(row: Int, col: Int, newNum: Int, isInit: Boolean): dupErr {
+    fun setData(row: Int, col: Int, newNum: Int, isInit: Boolean): DupErr {
         if(data[row][col].init){
-            return dupErr.FIX_DUP      //後で直す
+            return DupErr.FIX_DUP      //後で直す
         }
 
         // いままでに設定されている値をコピー
@@ -30,8 +30,8 @@ class GridData(
         }
         // コピーした配列がNumbergameのルールに沿っているかチェックする
         // チェックロジックは継承元のNumbergameDataにて実装
-        val dataCheckResult: dupErr = checkData(tmp, row, col, newNum)
-        if (NO_DUP == dataCheckResult) {
+        val dataCheckResult: DupErr = checkData(tmp, row, col, newNum)
+        if (DupErr.NO_DUP == dataCheckResult) {
             //チェックOKの場合、データに反映する。
             data[row][col].num = newNum
             data[row][col].init = isInit
@@ -54,8 +54,8 @@ class GridData(
                     // 未設定列を見つけたら
                     for (setNum in 1..KIND_OF_DATA) {
                         // 1 ～ 9 の数字を試してみる
-                        val ret: dupErr = checkData(tmp, rowIdx, colIdx, setNum)
-                        if (NO_DUP == ret) {
+                        val ret: DupErr = checkData(tmp, rowIdx, colIdx, setNum)
+                        if (DupErr.NO_DUP == ret) {
                             // 値をセットして次の再帰呼びだし
                             tmp[rowIdx][colIdx] = setNum
                             retList.addAll(findAnswerRecursive(tmp, endByFind))
@@ -99,7 +99,7 @@ class GridData(
 
         val fixCellSelected = NUM_OF_COL * NUM_OF_ROW - blankCellSelected
         var fixCelCnt = 0
-        while (fixCelCnt <= fixCellSelected) {
+        while (fixCelCnt < fixCellSelected) {
             seedRow = Random.nextInt(NUM_OF_ROW)
             seedCol = Random.nextInt(NUM_OF_COL)
             if (!data[seedRow][seedCol].init) {
@@ -115,6 +115,8 @@ class GridData(
     */
 
     fun resumeGame(newData: Array<Array<CellData>>){
+        // データ全消去
+        clearAll(true)
         for ((rowIdx, colArray) in data.withIndex()) {
             for ((colIdx) in colArray.withIndex()) {
                 data[rowIdx][colIdx].num = newData[rowIdx][colIdx].num
@@ -124,10 +126,9 @@ class GridData(
     }
 
     /*
-        指定セルに指定された場合の正解の数を返却する
+        指定セルに指定入力値の場合の正解の数を返却する
     */
     fun searchAnswer(checkRowId: Int, checkColId: Int, checkNum: Int) : MutableList<Array<Array<Int>>>{
-//        var retList: MutableList<Array<Array<Int>>> = mutableListOf()
         var retList: MutableList<Array<Array<Int>>> = mutableListOf()
         // いままでに設定されている値をコピー
         val tmp = Array(NUM_OF_ROW){Array(NUM_OF_COL){0}}
@@ -137,8 +138,8 @@ class GridData(
             }
         }
         // 指定セルに値を設定してみて回答が存在しているかチェック
-        val ret: dupErr = checkData(tmp, checkRowId, checkColId, checkNum)
-        if (NO_DUP == ret) {
+        val ret: DupErr = checkData(tmp, checkRowId, checkColId, checkNum)
+        if (DupErr.NO_DUP == ret) {
             // 値をセットして次の再帰呼びだし
             tmp[checkRowId][checkColId] = checkNum
             retList = findAnswerRecursive(tmp, false)

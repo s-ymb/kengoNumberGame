@@ -3,7 +3,7 @@ package io.github.s_ymb.kengonumbergame.ui.home
 import io.github.s_ymb.kengonumbergame.data.NumbergameData
 import io.github.s_ymb.kengonumbergame.data.ScreenBtnData
 import io.github.s_ymb.kengonumbergame.data.ScreenCellData
-import io.github.s_ymb.kengonumbergame.data.dupErr
+import io.github.s_ymb.kengonumbergame.data.DupErr
 
 data class NumbergameUiState(
     val currentData: Array<Array<ScreenCellData>> = Array(NumbergameData.NUM_OF_ROW)
@@ -19,9 +19,12 @@ data class NumbergameUiState(
     val currentSearchResult: Array<Int> = Array(NumbergameData.KIND_OF_DATA + 1) { 0 },
     val isGameOver: Boolean = false,
     val sameSatisfiedCnt: Int = -1,                 // 登録済みの正解件数（-1：未検索）
-    val errBtnMsgID:dupErr = dupErr.NO_DUP,
-    val errBtnNum: Int = 0,
+//    val errBtnMsgID:DupErr = DupErr.NO_DUP,
+//    val errBtnNum: Int = 0,
+//    val level: Int = 0,
     val blankCellCnt: Int = 0,
+//    val sliderPosMax: Int = 0,
+//    val sliderPosMin: Int = 0,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

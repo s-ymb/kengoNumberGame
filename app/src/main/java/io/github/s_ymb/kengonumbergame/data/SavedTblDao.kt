@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SavedTblDao {
 
-    @Query("SELECT * FROM SavedTbl ORDER BY id ")
+    @Query("SELECT * FROM SavedTbl ORDER BY id DESC")
     fun getAllGrids(): Flow<List<SavedTbl>>
 
-    @Query("SELECT * FROM SavedTbl ORDER BY id")
+    @Query("SELECT * FROM SavedTbl ORDER BY id DESC")
     fun getAll(): List<SavedTbl>
 
     @Query("SELECT * FROM SavedTbl WHERE id = :id")

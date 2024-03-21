@@ -12,8 +12,8 @@ android {
         applicationId = "io.github.s_ymb.kengonumbergame"
         minSdk = 30
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1"
+        versionCode = 2
+        versionName = "0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -85,7 +85,8 @@ dependencies {
 //    implementation("androidx.core:core-ktx:1.10.1")
 //    ksp("androidx.room:room-compiler:room_version")
 //    implementation("androidx.room:room-ktx:room_version")
-
+    
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // スプラッシュ二重起動対策
     implementation("androidx.core:core-splashscreen:1.0.1")

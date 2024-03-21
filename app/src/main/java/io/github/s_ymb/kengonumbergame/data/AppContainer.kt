@@ -1,6 +1,9 @@
 package io.github.s_ymb.kengonumbergame.data
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.preferences.core.Preferences
 
 interface AppContainer {
     val satisfiedGridTblRepository: SatisfiedGridTblRepository

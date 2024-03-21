@@ -15,8 +15,11 @@ import io.github.s_ymb.kengonumbergame.data.SavedCellTbl
 import io.github.s_ymb.kengonumbergame.data.SavedTbl
 import io.github.s_ymb.kengonumbergame.data.ScreenBtnData
 import io.github.s_ymb.kengonumbergame.data.ScreenCellData
-import io.github.s_ymb.kengonumbergame.data.dupErr
+import io.github.s_ymb.kengonumbergame.data.UserLevel
+import io.github.s_ymb.kengonumbergame.data.DupErr
 import io.github.s_ymb.kengonumbergame.data.toSatisfiedGrid
+import io.github.s_ymb.kengonumbergame.ui.ToastUiState
+import io.github.s_ymb.kengonumbergame.ui.UserLevelUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,38 +37,63 @@ class NumbergameViewModel(
     // Game UI state
     private val _uiState = MutableStateFlow(NumbergameUiState())
     val uiState: StateFlow<NumbergameUiState> = _uiState.asStateFlow()
+    // Toast UI state
+    private val _toastUiState = MutableStateFlow(ToastUiState())
+    val toastUiState = _toastUiState.asStateFlow()
+    //UserLevelUiState
+    private val _userLevelUiState  = MutableStateFlow(UserLevelUiState())
+    val userLevelUiState = _userLevelUiState.asStateFlow()
 
     private val gridData = GridData()
     private var satisfiedGridData = SatisfiedGridData()                 //表示中の正解リスト
-    private val satisfiedGridList = SatisfiedGridList()         //正解リスト
+    private val satisfiedGridList = SatisfiedGridList()                 //正解リスト
+    private var userLevel = UserLevel(SatisfiedGridList())     //レベル
 
     // ↓ 保存一覧以外からの遷移の場合はNULL
     private val id: Int ?= savedStateHandle[NumbergameScreenDestination.NumbergameScreenIdArg]
 
-    // TODO 固定セルの初期値と設定できる範囲の検討が必要
-    private var blankCellCnt = 30                                   //空白のセルの個数
+    private var blankCellCnt = UserLevel(SatisfiedGridList()).getMaxBlankCell()        //空白のセルの個数
     private var selectedRow = IMPOSSIBLE_IDX                        //選択中セルの行番号
     private var selectedCol = IMPOSSIBLE_IDX                        //選択中セルの列番号
 
 
     init {
+        // 正解リストをRoomのレポジトリより読み込み初期リストに追加
+        getSatisfiedList()
         // セルを空に設定
         clearGame()
+
         // 保存一覧からの遷移の場合はパラメータのidをキーにレポジトリより読み込みgridDataにセットする
         if(id != null) {
             getSaved(id)
         }
-        // 正解リストをRoomのレポジトリより読み込み初期リストに追加
-        getSatisfiedList()
+
     }
 
     private fun getSatisfiedList() {
-            // 正解リストに登録されている情報を正解リストに追加する
+        // 正解リストに登録されている情報を正解リストに追加する
         viewModelScope.launch(Dispatchers.IO) {
             val satisfiedGrids = appContainer.satisfiedGridTblRepository.getAll()
             satisfiedGrids.forEach {
                 satisfiedGridList.add(SatisfiedGridData(it.toSatisfiedGrid()))
             }
+            // 正解リストを基にユーザレベルオブジェクトを設定
+            userLevel = UserLevel(satisfiedGridList)
+
+
+            //検索結果をui state に保存
+            _uiState.update { currentState ->
+                currentState.copy(
+                    blankCellCnt = userLevel.getMaxBlankCell(),
+                )
+            }
+
+            _userLevelUiState.value = UserLevelUiState(
+                level = userLevel.getLevel(),
+                blankCellCnt = userLevel.getMaxBlankCell(),
+                sliderPosMax = userLevel.getMaxBlankCell(),
+                sliderPosMin = userLevel.getMinBlankCell(),
+            )
         }
     }
 
@@ -125,6 +153,7 @@ class NumbergameViewModel(
         val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss")
         val currentString = current.format(formatter)
 
+        // TODO string.xml での登録値の整合性
         // savedTbl に登録
         val createUser = if(asChallenge) {
                                     "課題保存"
@@ -233,7 +262,7 @@ class NumbergameViewModel(
                 gridStr.append(rowStr)
             }
             if(0 != sameSatisfiedCnt) {
-                // 未検索の場合又は１件登録済みが村税した場合、登録済みの件数を確認して０件の場合はデータを登録
+                // 未検索の場合又は１件登録済みが存在した場合、登録済みの件数を確認して０件の場合はデータを登録
                 // （微妙なタイミングで件数が-1 に初期化される可能性はあるが無視）
                 viewModelScope.launch(Dispatchers.IO) {
                     //すでに登録されているデータ数を検索(0 or 1 件)
@@ -247,8 +276,6 @@ class NumbergameViewModel(
                         blankCellCnt = blankCellCnt,
                         isGameOver = isGameOver,
                         sameSatisfiedCnt = sameSatisfiedCnt,
-                        errBtnMsgID = dupErr.NO_DUP,
-                        errBtnNum = 0,
                     )
                     if (0 == sameSatisfiedCnt) {
                         //TODO 文言をstring.xml に登録をどうするか？ context は使わないので放置
@@ -271,8 +298,6 @@ class NumbergameViewModel(
                             blankCellCnt = blankCellCnt,
                             isGameOver = isGameOver,
                             sameSatisfiedCnt = sameSatisfiedCnt,
-                            errBtnMsgID = dupErr.NO_DUP,
-                            errBtnNum = 0,
         )
     }
 
@@ -323,7 +348,7 @@ class NumbergameViewModel(
         正解パターン数検索
     */
     fun searchAnsCnt() {
-        val ansCnt = Array(NumbergameData.KIND_OF_DATA + 1) { 0 }
+        val ansCnt = Array(NumbergameData.KIND_OF_DATA + 1) { IMPOSSIBLE_NUM }
         var retList: MutableList<Array<Array<Int>>>
         if ((selectedRow != IMPOSSIBLE_IDX) && (selectedCol != IMPOSSIBLE_IDX)) {
             for (num in 1..NumbergameData.KIND_OF_DATA) {
@@ -341,14 +366,6 @@ class NumbergameViewModel(
                         }
                         gridStr.append(rowStr)
                     }
-                    /*
-                    for (rowIdx in 0 until NumbergameData.NUM_OF_ROW) {
-                        for (colIdx in 0 until NumbergameData.NUM_OF_COL) {
-                            //セルの設定
-                            gridDataString += it[rowIdx][colIdx].toString()
-                        }
-                    }
-                    */
                     viewModelScope.launch(Dispatchers.IO) {
                         //すでに登録されているデータ数を検索(0 or 1 件)
                         val dataCnt = appContainer.satisfiedGridTblRepository.getCnt(gridStr.toString())
@@ -386,33 +403,42 @@ class NumbergameViewModel(
         番号のボタンが押された場合、選択中のセルに番号を設定する
      */
     fun onNumberBtnClicked(number: Int){
+        var ret = DupErr.NOT_SELECTED       //とりあえず未選択状態
         if((selectedRow != IMPOSSIBLE_IDX) && (selectedCol != IMPOSSIBLE_IDX)) {
             // 画面で数字を入力する場所が選択されていた場合
-            val ret = gridData.setData(selectedRow, selectedCol, number, false)
-            if (dupErr.NO_DUP == ret) {
-                // 設定できた場合、新しいデータでui_state を再構築
-                setGridDataToUiState()
-            } else {
-                val currentUiState = _uiState
-                val newUiSatateValue =
-                    currentUiState.value.copy(errBtnNum = number, errBtnMsgID = ret)
-                _uiState.value = newUiSatateValue
-
-//            _uiState.update { currentUiState ->
-//                currentUiState.copy(
-//                    errBtnNum = number,
-//                    errBtnMsgID = ret,
-//                )
-//            }
-//            val newUiState = _uiState.value
+            ret = gridData.setData(selectedRow, selectedCol, number, false)
+        }
+        // TODO トーストのメッセージは仮置き(view Model なので strings.xml からの取得方法要検討
+        if(DupErr.NO_DUP != ret) {
+            val msg = when (ret) {
+                DupErr.ROW_DUP -> "同一行に同じ数字は入力出来ません"
+                DupErr.COL_DUP -> "同一列に同じ数字は入力出来ません"
+                DupErr.SQ_DUP -> "同一枠に同じ数字は入力出来ません"
+                DupErr.FIX_DUP -> "初期値は変更できません"
+                DupErr.NOT_SELECTED -> "数字を入力する場所をタップしてください"
+                else -> "???????"           //無いはず
             }
-       }
+
+            _toastUiState.value = ToastUiState(
+                showToast = true,
+                toastMsg = msg,
+            )
+        }
+        setGridDataToUiState()
     }
+
+    /*
+       Toast 表示後に   _uiStateToast を表示済みに更新
+*/
+    fun toastShown(){
+        _toastUiState.value = ToastUiState()
+    }
+
 
     /*
         スライダーで新規作成時の固定セルの個数が変更されたときメンバー変数に反映する
     */
-    fun setFixCellCnt(blankCnt: Int){
+    fun setBlankCellCnt(blankCnt: Int){
         blankCellCnt = blankCnt
     }
 
